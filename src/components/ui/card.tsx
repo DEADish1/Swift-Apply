@@ -1,27 +1,28 @@
-import { HTMLAttributes, forwardRef } from "react";
+import { HTMLAttributes, ReactNode, forwardRef } from "react";
 
-interface CardProps extends HTMLAttributes<HTMLDivElement> {}
+// Simple Card component - preferred pattern
+type SimpleCardProps = {
+  title?: string;
+  children: ReactNode;
+  className?: string;
+};
 
-const Card = forwardRef<HTMLDivElement, CardProps>(({ className = "", children, ...props }, ref) => {
+export function Card({ title, children, className = "" }: SimpleCardProps) {
   return (
-    <div
-      ref={ref}
-      className={`rounded-xl border border-gray-200 bg-white shadow-sm ${className}`}
-      {...props}
-    >
-      {children}
+    <div className={`rounded-2xl border border-slate-200 bg-white p-4 shadow-sm ${className}`}>
+      {title && <h2 className="mb-2 text-lg font-semibold">{title}</h2>}
+      <div className="text-sm text-slate-700">{children}</div>
     </div>
   );
-});
+}
 
-Card.displayName = "Card";
-
+// Backward-compatible compound components for existing pages
 interface CardHeaderProps extends HTMLAttributes<HTMLDivElement> {}
 
-const CardHeader = forwardRef<HTMLDivElement, CardHeaderProps>(
+export const CardHeader = forwardRef<HTMLDivElement, CardHeaderProps>(
   ({ className = "", children, ...props }, ref) => {
     return (
-      <div ref={ref} className={`border-b border-gray-200 px-6 py-4 ${className}`} {...props}>
+      <div ref={ref} className={`border-b border-slate-200 px-6 py-4 ${className}`} {...props}>
         {children}
       </div>
     );
@@ -32,7 +33,7 @@ CardHeader.displayName = "CardHeader";
 
 interface CardContentProps extends HTMLAttributes<HTMLDivElement> {}
 
-const CardContent = forwardRef<HTMLDivElement, CardContentProps>(
+export const CardContent = forwardRef<HTMLDivElement, CardContentProps>(
   ({ className = "", children, ...props }, ref) => {
     return (
       <div ref={ref} className={`px-6 py-4 ${className}`} {...props}>
@@ -46,12 +47,12 @@ CardContent.displayName = "CardContent";
 
 interface CardFooterProps extends HTMLAttributes<HTMLDivElement> {}
 
-const CardFooter = forwardRef<HTMLDivElement, CardFooterProps>(
+export const CardFooter = forwardRef<HTMLDivElement, CardFooterProps>(
   ({ className = "", children, ...props }, ref) => {
     return (
       <div
         ref={ref}
-        className={`border-t border-gray-200 bg-gray-50 px-6 py-4 ${className}`}
+        className={`border-t border-slate-200 bg-slate-50 px-6 py-4 ${className}`}
         {...props}
       >
         {children}
@@ -61,5 +62,3 @@ const CardFooter = forwardRef<HTMLDivElement, CardFooterProps>(
 );
 
 CardFooter.displayName = "CardFooter";
-
-export { Card, CardHeader, CardContent, CardFooter };
