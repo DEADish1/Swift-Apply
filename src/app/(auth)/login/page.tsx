@@ -3,7 +3,7 @@
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
-import { createClient } from "@/lib/supabase/client";
+import { supabase } from "@/lib/supabaseClient";
 import Link from "next/link";
 import { useRouter, useSearchParams } from "next/navigation";
 import { Suspense, useState } from "react";
@@ -22,8 +22,6 @@ function LoginForm() {
     e.preventDefault();
     setError("");
     setLoading(true);
-
-    const supabase = createClient();
 
     const { error: authError } = await supabase.auth.signInWithPassword({
       email,

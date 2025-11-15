@@ -3,7 +3,7 @@
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
-import { createClient } from "@/lib/supabase/client";
+import { supabase } from "@/lib/supabaseClient";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
@@ -33,8 +33,6 @@ export default function SignupPage() {
     }
 
     setLoading(true);
-
-    const supabase = createClient();
 
     const { error: authError } = await supabase.auth.signUp({
       email,

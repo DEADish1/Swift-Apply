@@ -1,7 +1,7 @@
 "use client";
 
 import { Button } from "@/components/ui/button";
-import { createClient } from "@/lib/supabase/client";
+import { supabase } from "@/lib/supabaseClient";
 import {
   Briefcase,
   ClipboardList,
@@ -35,7 +35,6 @@ export function DashboardLayout({ children, userName }: DashboardLayoutProps) {
   const router = useRouter();
 
   const handleLogout = async () => {
-    const supabase = createClient();
     await supabase.auth.signOut();
     router.push("/");
     router.refresh();
